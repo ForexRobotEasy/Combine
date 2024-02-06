@@ -1,0 +1,100 @@
+
+// Program Name: Combine
+// Developer's Site: forexroboteasy.com
+// Development Name: Forex Robot Easy Team
+
+// Include necessary libraries
+#include <Trade\Trade.mqh>
+#include <Trade\PositionInfo.mqh>
+
+// Define the supported currency pairs
+enum SupportedPairs
+{
+    EURCHF,
+    USDCHF,
+    EURGBP,
+    EURAUD,
+    EURCAD,
+    NZDCHF,
+    CADCHF,
+    AUDCAD,
+    NZDUSD,
+    GBPCHF
+};
+
+// Define the chart period
+enum ChartPeriod
+{
+    H4
+};
+
+// Define the account type
+enum AccountType
+{
+    ECNPro
+};
+
+// Define the Combine class
+class Combine
+{
+private:
+    // Member variables
+    int m_deposit;
+
+public:
+    // Constructor
+    Combine(int deposit)
+    {
+        m_deposit = deposit;
+    }
+
+    // Trading function to optimize multi-pair trading
+    void OptimizeTrading()
+    {
+        // Initialize trading functions
+        CTrade trade;
+        CPositionInfo position;
+
+        // Set the trading account type
+        trade.SetAccountType(AccountType::ECNPro);
+
+        // Loop through each supported currency pair
+        for (int i = 0; i < SupportedPairs::GBPCHF + 1; i++)
+        {
+            // Set the currency pair for trading
+            trade.SetSymbol(SupportedPairs(i));
+
+            // Set the deposit for the currency pair
+            trade.SetDeposit(m_deposit);
+
+            // Perform the trading operations
+            // ...
+        }
+    }
+};
+
+// Entry point of the program
+int OnInit()
+{
+    // Set the chart period
+    ChartPeriod chartPeriod = ChartPeriod::H4;
+
+    // Set the deposit requirements
+    int deposit = 50;
+
+    // Create an instance of the Combine class
+    Combine combine(deposit);
+
+    // Optimize multi-pair trading
+    combine.OptimizeTrading();
+
+    // Return initialization result
+    return(INIT_SUCCEEDED);
+}
+
+// Exit point of the program
+void OnDeinit(const int reason)
+{
+    // Perform any necessary cleanup operations
+    // ...
+}
